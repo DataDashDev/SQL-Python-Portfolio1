@@ -27,3 +27,31 @@ This SQL script creates supporting tables for the `CompanyBuilding` database:
 - **Purpose**: Serves as a reference for department codes in the Employee table and other related tables.
 
 These tables are **lookup/reference tables** that help maintain data integrity and support reporting by providing descriptive names for codes used in the primary Employee table.
+
+## Employee History Tables (`create_employee_history_sql.sql`)
+
+This script creates tables to track **historical employee data** in the `CompanyBuilding` database.
+
+### **Employee_History Table**
+- **Employee_History_ID**: Auto-incrementing primary key.  
+- **Employee_ID**: References the primary Employee table.  
+- **Supervisor_Level1_ID … Supervisor_Level4_ID**: Optional references to Employee table, allowing hierarchical reporting structure.  
+- **Job_Code**: References `Job_Code` table to track the employee's role over time.  
+- **Department_Code**: References `Dept_Code` table to track department changes.  
+- **First_Name / Last_Name**: Stores the employee’s name at that point in history.  
+- **Effective_Date / Expiration_Date**: Defines the time period this record was valid.  
+- **Purpose**: Tracks changes in an employee’s role, department, and reporting hierarchy over time.
+
+### **Employee_Address_History Table**
+- **Address_History_ID**: Auto-incrementing primary key.  
+- **Employee_ID**: References the primary Employee table.  
+- **Street_Address / City / State / Zip_Code**: Stores historical addresses.  
+- **Effective_Date / Expiration_Date**: Defines the period this address was valid.  
+- **Purpose**: Maintains historical address information for employees, useful for auditing, reporting, or HR analytics.
+
+---
+
+**Notes:**  
+- These tables allow you to **track employee changes over time** without altering the main Employee table.  
+- All relationships use **foreign key constraints** to maintain referential integrity.  
+- They can be populated with **Python Faker scripts** to simulate real historical data.
